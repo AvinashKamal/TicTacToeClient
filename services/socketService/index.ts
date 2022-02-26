@@ -23,6 +23,20 @@ class socketService {
             })
         })
     }
+
+    public disconnect(url: string) : Promise<Socket<DefaultEventsMap, DefaultEventsMap>> {
+        return new Promise((resolve, reject) => {
+            this.socket = io(url)
+            
+            if(!this.socket) {
+                return reject()
+            }
+
+            this.socket.on("disconnect", () => {
+                resolve(this.socket as Socket)
+            })
+        })
+    }
 }
 
 export default new socketService();
